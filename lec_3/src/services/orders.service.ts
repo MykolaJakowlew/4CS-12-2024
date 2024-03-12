@@ -11,5 +11,13 @@ export class OrdersService {
     private readonly orderModel: Model<OrderDoc>,
   ) {}
 
-  async createOrder(body: OrderDto) {}
+  async createOrder(body: OrderDto & { login: string }) {
+    const price = Math.floor(Math.random() * (50 - 10 + 1) + 10);
+
+    const doc = new this.orderModel({ ...body, price });
+
+    const order = await doc.save();
+
+    return order;
+  }
 }
